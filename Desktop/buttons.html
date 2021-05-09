@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <style>
+        div{
+            position: relative;
+            top:150px;
+            left:-7px;
+        }
+        svg{
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: -2;
+            transform-origin: 0% 100%;
+        }
+        ellipse{
+            fill: #18FF74;
+            stroke: #00D672;
+        }
+        .buttons {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            border-radius: 0 100% 0 0;
+            background-color: rgb(24, 235, 4);
+        }
+    </style>
+
+</head>
+<body>
+<div id="elem">0 : 0</div>
+<div>
+<button class="buttons" id="on">
+<svg width="25px" hidden="25px" viewBox="0 0 71.01 71.74" >
+<ellipse class="a" cx="12.79" cy="26.64" rx="26.28" ry="11.99" transform="translate(-15.15 36.28) rotate(-83.39)"/></svg>
+<svg width="25px" hidden="25px" viewBox="0 0 71.01 71.74" >
+<ellipse class="a" cx="36.24" cy="36.22" rx="26.28" ry="11.99" transform="translate(-14.41 28.5) rotate(-36.32)"/></svg>
+<svg width="25px" hidden="25px" viewBox="0 0 71.01 71.74" >
+<ellipse class="a" cx="44.24" cy="59.22" rx="26.28" ry="11.99" transform="translate(-2.07 1.6) rotate(-2.03)"/></svg>
+</svg>
+    </button>
+</div>
+</body>
+<script>
+var elem = document.getElementById('elem');
+var x = 0;
+var mousemoves = 0;
+var element = document.querySelector('.buttons');
+
+var crushen =   anime({
+    targets: document.querySelectorAll("svg"),
+    rotate: -120,
+    easing: 'easeOutQuad',
+    direction: 'alternate',
+    autoPlay: false,
+    duration: 5000,
+    delay: function(el, i, l) {
+    return i * 200;
+    },
+    update: function () {
+    },
+   autoplay: false
+});
+
+ function libesti(){
+     anime({
+        targets: document.querySelectorAll("svg"),
+        width: 70,
+        hidden: 100,
+        top: -25,
+        left: 5,
+
+        easing: 'easeOutQuad',
+        direction: 'normal',
+        duration:500,
+        delay: function(el, i, l) {
+            return i * 200;
+        },
+        loop: false,
+         complete: function() {
+         mousemoves++; }
+            })}
+
+let animeColors =
+   anime({
+       targets: document.querySelector('#on') ,
+       backgroundColor: 'rgb(40,40,235)',
+       easing: 'easeOutQuad',
+       direction: 'alternate',
+       loop: true,
+       delay: 1000,
+       update: function () {
+      if (element.id == 'hover'){
+          element.style.backgroundColor= 'rgb(235,234,6)';
+      }
+       }
+        });
+
+document.querySelector("button").addEventListener('mousemove',function () {
+document.querySelector("button").id = "hover";
+libesti();
+});
+document.querySelector("button").addEventListener('mouseleave',function () {
+document.querySelector("button").id = "on";
+document.addEventListener('mousemove', function(event) {
+    elem.innerHTML = event.pageX + ' : ' + event.pageY;
+    x = event.pageX;
+    if (mousemoves > 1){
+        crushen.seek(crushen.duration * (x / 1000) );
+    }
+});
+});
+</script>
+</html>
